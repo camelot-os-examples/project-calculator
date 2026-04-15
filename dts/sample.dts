@@ -1,0 +1,171 @@
+/*
+ * Copyright (c) 2023,Ledger SAS
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <st/u5/stm32u595.dtsi>
+#include <dt-bindings/pinctrl/stm32-pinctrl.h>
+#include <sentry.dtsi>
+
+/{
+	chosen {
+		sentry,debug_stdout = <&usart1>;
+	};
+
+    reserved-memory {
+        tasks_code: memory@0800d000 {
+               reg = <0x0800d000 0x200000>;
+               compatible = "sentry,memory-pool";
+        };
+        tasks_ram: memory@20008000 {
+               reg = <0x20008000 0x280000>;
+               compatible = "sentry,memory-pool";
+        };
+    };
+
+	aliases {
+        pll = &pll1;
+    };
+};
+
+&flash0 {
+	reg = <0x08000000 DT_SIZE_M(4)>;
+};
+
+&sram0 {
+	reg = <0x20000000 DT_SIZE_K(2514)>;
+};
+
+&clk_lsi {
+	status = "okay";
+};
+
+&clk_hsi {
+	status = "okay";
+};
+
+&clk_hsi48 {
+       status = "okay";
+};
+
+&clk_hse {
+       status = "okay";
+};
+
+&clk_msis {
+	status = "okay";
+};
+
+&pll1 {
+       status = "okay";
+};
+
+&pll3 {
+       status = "okay";
+};
+
+&flash {
+	wait-state = <4>; /* According to voltage supply and sysclock */
+	status = "okay";
+};
+
+&rcc {
+    clocks = <&pll1>;
+    clock-frequency = <DT_FREQ_M(160)>;
+	bus-prescalers = <0>, <0>, <0>, <0>;
+	bus-names = "ahb", "apb1", "apb2", "apb3";
+	status = "okay";
+};
+
+&exti {
+	events = <26>;
+	status = "okay";
+};
+
+&gpioa {
+	status = "okay";
+};
+
+&gpiob {
+	status = "okay";
+};
+
+&gpioc {
+	status = "okay";
+};
+
+&gpiod {
+	status = "okay";
+};
+
+&gpioe {
+	status = "okay";
+};
+
+&gpiof {
+	status = "okay";
+};
+
+&gpiog {
+	status = "okay";
+};
+
+&usart1{
+	status = "okay";
+	pinctrl-0 = <&usart1_tx_pa9>, <&usart1_rx_pa10>;
+};
+
+&usart3 {
+        status = "okay";
+        pinctrl-0 = <&usart3_tx>, <&usart3_rx>;
+	sentry,owner = <0xC001F002>;
+        sentry,label = <0x103>;
+	usart,peripheral-clock = <40>; /* 40MHz APB1 clock */
+};
+
+
+
+&pinctrl {
+	/* calculator console usart */
+	usart3_tx: usart3_tx {
+		id = "usart3_tx";
+		pinmux = <&gpioc 10 STM32_DT_PIN_MODE_ALTFUNC(7)>;
+		pincfg = <STM32_OTYPER_PUSH_PULL \
+			  STM32_OSPEEDR_VERY_HIGH_SPEED \
+			  STM32_PUPDR_NO_PULL>;
+	};
+
+	usart3_rx: usart3_rx {
+		id = "usart3_rx";
+		pinmux = <&gpioc 11 STM32_DT_PIN_MODE_ALTFUNC(7)>;
+		pincfg = <STM32_OTYPER_PUSH_PULL \
+			  STM32_OSPEEDR_VERY_HIGH_SPEED \
+			  STM32_PUPDR_NO_PULL>;
+	};
+
+	/* kernel serial */
+	usart1_tx_pa9: usart1_tx_pa9  {
+		pinmux = <&gpioa 9 STM32_DT_PIN_MODE_ALTFUNC(7)>;
+		pincfg = <STM32_OTYPER_PUSH_PULL \
+				  STM32_OSPEEDR_VERY_HIGH_SPEED \
+				  STM32_PUPDR_NO_PULL>;
+	};
+
+	usart1_rx_pa10: usart1_rx_pa10  {
+		pinmux = <&gpioa 10 STM32_DT_PIN_MODE_ALTFUNC(7)>;
+		pincfg = <STM32_OTYPER_PUSH_PULL \
+				  STM32_OSPEEDR_VERY_HIGH_SPEED \
+				  STM32_PUPDR_NO_PULL>;
+	};
+};
+
+&rng {
+	status = "okay";
+};
+
+&syscfg {
+	status = "okay";
+};

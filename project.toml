@@ -1,0 +1,25 @@
+name = 'Serial calculator demo Project'
+license = 'Apache-2.0'
+license_file = ['LICENSE.txt']
+dts = 'dts/sample.dts'
+crossfile = 'cm33-none-eabi-gcc.ini'
+version = 'v0.0.1'
+
+[kernel]
+scm.git.uri = 'https://github.com/PThierry/sentry-kernel.git'
+scm.git.revision = 'fix-old-ownership-check'
+config = 'configs/sentry.config'
+
+[runtime]
+scm.git.uri = 'https://github.com/camelot-os/shield.git'
+scm.git.revision = 'main'
+config = 'configs/shield.config'
+
+[application.calculator]
+scm.git.uri = 'https://github.com/PThierry/app-calculator.git'
+scm.git.revision = 'main'
+config = 'configs/calculator.config'
+build.backend = 'meson'
+depends = []
+provides = ['calculator-app.elf']
+
