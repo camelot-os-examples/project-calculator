@@ -6,8 +6,8 @@ crossfile = 'cm33-none-eabi-gcc.ini'
 version = 'v0.0.1'
 
 [kernel]
-scm.git.uri = 'https://github.com/PThierry/sentry-kernel.git'
-scm.git.revision = 'fix-old-ownership-check'
+scm.git.uri = 'https://github.com/camelot-os/sentry-kernel.git'
+scm.git.revision = 'main'
 config = 'configs/sentry.config'
 
 [runtime]
@@ -16,7 +16,7 @@ scm.git.revision = 'main'
 config = 'configs/shield.config'
 
 [application.calculator]
-scm.git.uri = 'https://github.com/PThierry/app-calculator.git'
+scm.git.uri = 'https://github.com/camelot-os-examples/app-calculator.git'
 scm.git.revision = 'main'
 config = 'configs/calculator.config'
 build.backend = 'meson'
